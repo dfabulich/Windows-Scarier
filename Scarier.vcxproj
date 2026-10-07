@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{6D2B1A55-0C3E-4E8B-9A57-3C1F2E7B9D41}</ProjectGuid>
+    <RootNamespace>Scarier</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v145</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+    <UseOfMfc>Static</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)'=='Debug'" Label="Configuration">
+    <UseDebugLibraries>true</UseDebugLibraries>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)'=='Release'" Label="Configuration">
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup>
+    <ScarierDir>$(MSBuildThisFileDirectory)upstream\spatterlight\terps\scarier\</ScarierDir>
+    <CommonUtilsDir>$(MSBuildThisFileDirectory)upstream\spatterlight\terps\common_utils\</CommonUtilsDir>
+    <GlkDir>$(MSBuildThisFileDirectory)upstream\DavidKinder\Adv\Glk\</GlkDir>
+    <ZlibDir>$(MSBuildThisFileDirectory)upstream\libs\zlib\</ZlibDir>
+    <GlkLibDir>$(MSBuildThisFileDirectory)build\Glk\$(Configuration)\</GlkLibDir>
+    <GlkLibProperties>Configuration=$(Configuration);Platform=$(Platform);ConfigurationType=StaticLibrary;OutDir=$(GlkLibDir);IntDir=$(GlkLibDir);ForceImportBeforeCppTargets=$(MSBuildThisFileDirectory)GlkStatic.targets</GlkLibProperties>
+    <OutDir>$(MSBuildThisFileDirectory)bin\$(Configuration)\</OutDir>
+    <IntDir>$(MSBuildThisFileDirectory)build\Scarier\$(Configuration)\</IntDir>
+    <TargetName>Scarier</TargetName>
+    <GenerateManifest>false</GenerateManifest>
+    <!-- Visual Studio's check can't see changes to the Glk sources built by BuildGlkLibrary. -->
+    <DisableFastUpToDateCheck>true</DisableFastUpToDateCheck>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(MSBuildThisFileDirectory)resources;$(ScarierDir);$(CommonUtilsDir);$(GlkDir)Include;$(ZlibDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;OS_WINDOWS;GARGLK_NEEDS_STRNDUP;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
+      <WarningLevel>Level3</WarningLevel>
+      <DisableSpecificWarnings>4244;4267;4996</DisableSpecificWarnings>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <AdditionalDependencies>$(GlkLibDir)Glk.lib;jpeg-static.lib;winmm.lib;dsound.lib;dwrite.lib;d2d1.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(MSBuildThisFileDirectory)upstream\DavidKinder\Libraries\jpeg\lib32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <ResourceCompile>
+      <AdditionalIncludeDirectories>$(GlkDir)GlkDll;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)'=='Debug'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <!-- build.ps1 builds jpeg-static.lib in Release only. -->
+      <IgnoreSpecificDefaultLibraries>libcmt.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)'=='Release'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup Label="Scarier ADRIFT 4 engine">
+    <ClCompile Include="$(ScarierDir)sctafpar.cpp" />
+    <ClCompile Include="$(ScarierDir)sctaffil.cpp" />
+    <ClCompile Include="$(ScarierDir)scprops.cpp" />
+    <ClCompile Include="$(ScarierDir)scvars.cpp" />
+    <ClCompile Include="$(ScarierDir)scexpr.cpp" />
+    <ClCompile Include="$(ScarierDir)scprintf.cpp" />
+    <ClCompile Include="$(ScarierDir)scinterf.cpp" />
+    <ClCompile Include="$(ScarierDir)scparser.cpp" />
+    <ClCompile Include="$(ScarierDir)scevents.cpp" />
+    <ClCompile Include="$(ScarierDir)scnpcs.cpp" />
+    <ClCompile Include="$(ScarierDir)scbattle.cpp" />
+    <ClCompile Include="$(ScarierDir)scobjcts.cpp" />
+    <ClCompile Include="$(ScarierDir)sctasks.cpp" />
+    <ClCompile Include="$(ScarierDir)screstrs.cpp" />
+    <ClCompile Include="$(ScarierDir)scgamest.cpp" />
+    <ClCompile Include="$(ScarierDir)scserial.cpp" />
+    <ClCompile Include="$(ScarierDir)scresour.cpp" />
+    <ClCompile Include="$(ScarierDir)scmemos.cpp" />
+    <ClCompile Include="$(ScarierDir)scutils.cpp" />
+    <ClCompile Include="$(ScarierDir)sclocale.cpp" />
+    <ClCompile Include="$(ScarierDir)scdebug.cpp" />
+    <ClCompile Include="$(ScarierDir)mapdraw.cpp" />
+    <ClCompile Include="$(ScarierDir)scmap.cpp" />
+    <ClCompile Include="$(ScarierDir)library\sclibrar_disambig.cpp" />
+    <ClCompile Include="$(ScarierDir)library\sclibrar_examine.cpp" />
+    <ClCompile Include="$(ScarierDir)library\sclibrar_dispatch.cpp" />
+    <ClCompile Include="$(ScarierDir)library\sclibrar_take.cpp" />
+    <ClCompile Include="$(ScarierDir)library\sclibrar_takefrom.cpp" />
+    <ClCompile Include="$(ScarierDir)library\sclibrar_drop.cpp" />
+    <ClCompile Include="$(ScarierDir)library\sclibrar_open.cpp" />
+    <ClCompile Include="$(ScarierDir)library\sclibrar_put.cpp" />
+    <ClCompile Include="$(ScarierDir)library\sclibrar_battle.cpp" />
+    <ClCompile Include="$(ScarierDir)library\sclibrar_refuse.cpp" />
+    <ClCompile Include="$(ScarierDir)library\sclibrar_verbobj.cpp" />
+    <ClCompile Include="$(ScarierDir)library\sclibrar_print.cpp" />
+    <ClCompile Include="$(ScarierDir)library\sclibrar_room.cpp" />
+    <ClCompile Include="$(ScarierDir)library\sclibrar_meta.cpp" />
+    <ClCompile Include="$(ScarierDir)library\sclibrar_go.cpp" />
+    <ClCompile Include="$(ScarierDir)library\sclibrar_topic.cpp" />
+    <ClCompile Include="$(ScarierDir)library\sclibrar_read.cpp" />
+    <ClCompile Include="$(ScarierDir)library\sclibrar_verbs.cpp" />
+    <ClCompile Include="$(ScarierDir)library\sclibrar_sitstand.cpp" />
+    <ClCompile Include="$(ScarierDir)library\sclibrar_misc.cpp" />
+    <ClCompile Include="$(ScarierDir)library\sclibrar_talk.cpp" />
+    <ClCompile Include="$(ScarierDir)runner\scrunner.cpp" />
+    <ClCompile Include="$(ScarierDir)runner\scrun_split.cpp" />
+    <ClCompile Include="$(ScarierDir)runner\scrun_respell.cpp" />
+    <ClCompile Include="$(ScarierDir)runner\scrun_match.cpp" />
+    <ClCompile Include="$(ScarierDir)runner\scrun_dispatch.cpp" />
+  </ItemGroup>
+  <ItemGroup Label="Scarier ADRIFT 5 engine">
+    <ClCompile Include="$(ScarierDir)adrift5\a5blorb.cpp" />
+    <ClCompile Include="$(ScarierDir)adrift5\a5deobf.cpp" />
+    <ClCompile Include="$(ScarierDir)adrift5\a5xml.cpp" />
+    <ClCompile Include="$(ScarierDir)adrift5\a5model.cpp" />
+    <ClCompile Include="$(ScarierDir)adrift5\a5state.cpp" />
+    <ClCompile Include="$(ScarierDir)adrift5\a5restr.cpp" />
+    <ClCompile Include="$(ScarierDir)adrift5\a5expr.cpp" />
+    <ClCompile Include="$(ScarierDir)adrift5\a5sexpr.cpp" />
+    <ClCompile Include="$(ScarierDir)adrift5\a5text.cpp" />
+    <ClCompile Include="$(ScarierDir)adrift5\a5parse.cpp" />
+    <ClCompile Include="$(ScarierDir)adrift5\a5rand.cpp" />
+    <ClCompile Include="$(ScarierDir)adrift5\a5sb.cpp" />
+    <ClCompile Include="$(ScarierDir)adrift5\a5run_ref.cpp" />
+    <ClCompile Include="$(ScarierDir)adrift5\a5run_events.cpp" />
+    <ClCompile Include="$(ScarierDir)adrift5\a5run_conv.cpp" />
+    <ClCompile Include="$(ScarierDir)adrift5\a5run_resp.cpp" />
+    <ClCompile Include="$(ScarierDir)adrift5\a5run_sort.cpp" />
+    <ClCompile Include="$(ScarierDir)adrift5\a5run_action.cpp" />
+    <ClCompile Include="$(ScarierDir)adrift5\a5run.cpp" />
+    <ClCompile Include="$(ScarierDir)adrift5\a5map.cpp" />
+  </ItemGroup>
+  <ItemGroup Label="Glk front end">
+    <ClCompile Include="$(ScarierDir)glk\os_glk.cpp" />
+    <ClCompile Include="$(ScarierDir)glk\os_glk_locale.cpp" />
+    <ClCompile Include="$(ScarierDir)glk\os_glk_status.cpp" />
+    <ClCompile Include="$(ScarierDir)glk\os_glk_output.cpp" />
+    <ClCompile Include="$(ScarierDir)glk\os_glk_symbols.cpp" />
+    <ClCompile Include="$(ScarierDir)glk\os_glk_resources.cpp" />
+    <ClCompile Include="$(ScarierDir)glk\os_glk_commands.cpp" />
+    <ClCompile Include="$(ScarierDir)glk\os_glk_input.cpp" />
+    <ClCompile Include="$(ScarierDir)glk\os_glk_a5.cpp" />
+    <ClCompile Include="$(ScarierDir)glk\os_glk_a5_display.cpp" />
+    <ClCompile Include="$(ScarierDir)glk\os_glk_autosave.cpp" />
+    <ClCompile Include="$(ScarierDir)glk\os_glk_map.cpp" />
+    <ClCompile Include="$(CommonUtilsDir)randomness.c" />
+    <ClCompile Include="$(ScarierDir)common_utils\sc_garglk.c" />
+    <ClCompile Include="src\GlkStatic.cpp" />
+  </ItemGroup>
+  <ItemGroup Label="zlib">
+    <ClCompile Include="$(ZlibDir)adler32.c" />
+    <ClCompile Include="$(ZlibDir)crc32.c" />
+    <ClCompile Include="$(ZlibDir)deflate.c" />
+    <ClCompile Include="$(ZlibDir)inffast.c" />
+    <ClCompile Include="$(ZlibDir)inflate.c" />
+    <ClCompile Include="$(ZlibDir)inftrees.c" />
+    <ClCompile Include="$(ZlibDir)trees.c" />
+    <ClCompile Include="$(ZlibDir)zutil.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="resources\resource.h" />
+    <ResourceCompile Include="resources\Scarier.rc" />
+    <None Include="resources\Scarier.manifest" />
+    <Image Include="resources\scarier.ico" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <!--
+    Windows Glk's own project builds Glk.dll; build it as a static library
+    instead, so that Scarier.exe is self-contained.  This is an MSBuild task
+    rather than a ProjectReference because Visual Studio doesn't build
+    project references with custom properties.
+  -->
+  <Target Name="BuildGlkLibrary" BeforeTargets="Link">
+    <MSBuild Projects="$(GlkDir)GlkDll\Glk.vcxproj" Properties="$(GlkLibProperties)" />
+  </Target>
+  <Target Name="CleanGlkLibrary" AfterTargets="Clean">
+    <MSBuild Projects="$(GlkDir)GlkDll\Glk.vcxproj" Targets="Clean" Properties="$(GlkLibProperties)" />
+  </Target>
+</Project>

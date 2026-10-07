@@ -1,0 +1,31 @@
+[submodule "upstream/spatterlight"]
+	path = upstream/spatterlight
+	url = https://github.com/dfabulich/spatterlight.git
+	branch = windows-msvc
+[submodule "upstream/DavidKinder/Adv/Glk"]
+	path = upstream/DavidKinder/Adv/Glk
+	url = https://github.com/dfabulich/Windows-Glk.git
+	branch = adrift
+[submodule "upstream/DavidKinder/Libraries"]
+	path = upstream/DavidKinder/Libraries
+	url = https://github.com/DavidKinder/Libraries.git
+	ignore = untracked
+[submodule "upstream/libs/zlib"]
+	path = upstream/libs/zlib
+	url = https://github.com/madler/zlib.git
+[submodule "upstream/libs/libpng"]
+	path = upstream/libs/libpng
+	url = https://github.com/pnggroup/libpng.git
+	ignore = untracked
+[submodule "upstream/libs/libogg"]
+	path = upstream/libs/libogg
+	url = https://github.com/xiph/ogg.git
+[submodule "upstream/libs/libvorbis"]
+	path = upstream/libs/libvorbis
+	url = https://github.com/xiph/vorbis.git
+[submodule "upstream/libs/minimp3"]
+	path = upstream/libs/minimp3
+	url = https://github.com/lieff/minimp3.git
+[submodule "upstream/libs/libjpeg-turbo"]
+	path = upstream/libs/libjpeg-turbo
+	url = https://github.com/libjpeg-turbo/libjpeg-turbo.git

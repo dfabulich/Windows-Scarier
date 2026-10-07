@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Scarier.vcxproj builds Windows Glk's Glk.vcxproj as a static library with
+  ConfigurationType=StaticLibrary, and imports this file into it through
+  ForceImportBeforeCppTargets to adjust the parts of the DLL project that
+  global properties can't reach.
+-->
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <!-- _USRDLL makes MFC link its DllMain into every program that uses the library. -->
+      <PreprocessorDefinitions>$([System.String]::Copy('%(PreprocessorDefinitions)').Replace('_USRDLL', '_LIB'))</PreprocessorDefinitions>
+      <!-- Glk.vcxproj hard-codes .\Release\ and .\Debug\, which the DLL build also uses. -->
+      <PrecompiledHeaderOutputFile>$(IntDir)Glk.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ProgramDataBaseFileName>$(IntDir)</ProgramDataBaseFileName>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <!-- A static library can't carry resources; Scarier.rc includes Glk.rc instead. -->
+    <ResourceCompile Remove="@(ResourceCompile)" />
+  </ItemGroup>
+</Project>

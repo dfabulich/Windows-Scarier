@@ -1,0 +1,2 @@
+#define IDR_MANIFEST 1
+#define IDI_SCARIER  1000
